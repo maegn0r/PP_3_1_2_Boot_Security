@@ -8,6 +8,12 @@
 
 <div class="container">
     <form th:method="post" th:action="@{/add/}" th:object="${user}">
+        <label for="Имя">Введите имя пользователя: </label>
+        <input type="text" th:field="*{username}" id="Имя пользователя"/>
+        <br/>
+        <label for="Возраст">Введите пароль: </label>
+        <input type="text" th:field="*{password}" id="Пароль"/>
+        <br/>
         <label for="Имя">Введите имя: </label>
         <input type="text" th:field="*{name}" id="Имя"/>
         <br/>

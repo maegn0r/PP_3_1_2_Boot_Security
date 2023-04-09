@@ -12,6 +12,8 @@ public interface UserDao {
 
     User findById(Long id);
 
+    User findByUsername(String name);
+
     void merge(User user);
 
     void remove(User user);

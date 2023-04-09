@@ -34,7 +34,7 @@ public class GlobalExceptionHandlingControllerAdvice {
         mav.addObject("url", req.getRequestURL());
         mav.addObject("timestamp", new Date().toString());
         mav.addObject("status", 400);
-        mav.setViewName("error");
+        mav.setViewName("myerrorpage");
         return mav;
     }
 }

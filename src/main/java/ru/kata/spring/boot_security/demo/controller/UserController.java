@@ -2,6 +2,8 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +14,10 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @RequestMapping("/")
 public class UserController {
 
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping(value = "/admin")
     public String usersList(ModelMap model) {
         model.addAttribute("users", userService.getListOfUsers());
         return "users";
@@ -29,6 +32,7 @@ public class UserController {
     }
     @PostMapping(value = "/add")
     public String addUser(@ModelAttribute("user") UserDto userDto){
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userService.add(userDto);
         return "redirect:/";
     }
@@ -40,6 +44,13 @@ public class UserController {
         model.addAttribute("user", userDto);
         return "update";
 
+    }
+
+    @GetMapping("/user")
+    public String showUserInfo(ModelMap model, Authentication authentication){
+        UserDto userDto = userService.findByUsername(authentication.getName());
+        model.addAttribute("user", userDto);
+        return "user";
     }
 
     @PostMapping(value = "/update")
@@ -54,7 +65,8 @@ public class UserController {
         return "redirect:/";
     }
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(PasswordEncoder passwordEncoder, UserService userService) {
+        this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
 }

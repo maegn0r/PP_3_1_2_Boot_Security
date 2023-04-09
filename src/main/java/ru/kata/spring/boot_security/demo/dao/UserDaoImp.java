@@ -36,6 +36,16 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    public User findByUsername(String username) {
+        User user = entityManager.createQuery("SELECT user from User user WHERE user.username = :username", User.class).setParameter("username",username).getSingleResult();
+        if (user == null) {
+            throw new EntityNotFoundException("В базе нет пользователя с именем "
+                    + username);
+        }
+        return user;
+    }
+
+    @Override
     public void merge(User user) {
         entityManager.merge(user);
     }
