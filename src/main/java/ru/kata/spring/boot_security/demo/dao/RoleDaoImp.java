@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -18,6 +19,16 @@ public class RoleDaoImp implements RoleDao {
     @Override
     public void add(Role role) {
         entityManager.persist(role);
+    }
+
+    @Override
+    public Role findById(Long id) {
+        Role role = entityManager.find(Role.class, id);
+        if (role == null) {
+            throw new EntityNotFoundException("В базе нет роли с идентификатором "
+                    + id);
+        }
+        return role;
     }
 
     @Override

@@ -9,9 +9,9 @@
     <p>Logged as: <span sec:authentication="name"></span></p>
     <p>Has role: <span sec:authentication="authorities"></span></p>
     <div class="container">
-        <h2 th:text="${'Имя: ' + user.getName()}"></h2>
-        <h2 th:text="${'Фамилия: ' + user.getSurname()}"></h2>
-        <h2 th:text="${'Возраст: ' + user.getAge()}"></h2>
+        <p th:text="${'Имя: ' + user.getName()}"></p>
+        <p th:text="${'Фамилия: ' + user.getSurname()}"></p>
+        <p th:text="${'Возраст: ' + user.getAge()}"></p>
     </div>
     <a th:href="@{/logout}">Log out</a>
 </div>

@@ -1,42 +1,34 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService {
 
     private final UserDao userDao;
-    private final RoleDao roleDao;
+    private final RoleService roleService;
 
     @Autowired
-    public UserServiceImp(UserDao userDao, RoleDao roleDao) {
+    public UserServiceImp(UserDao userDao, RoleService roleService) {
         this.userDao = userDao;
-        this.roleDao = roleDao;
+        this.roleService = roleService;
     }
 
     @Override
     @Transactional
     public void add(UserDto userDto) {
         User user = new User(userDto);
-        if (user.getName().equals("Николай")) {
-            user.setRoles(roleDao.listRoles());
-        } else {
-            user.setRoles(roleDao.listRoles().stream().filter(i -> Objects.equals(i.getName(), "ROLE_USER")).collect(Collectors.toList()));
-        }
- //       user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toList()));
         userDao.add(user);
     }
 
@@ -65,7 +57,6 @@ public class UserServiceImp implements UserService {
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
-        user.setPassword(userDto.getPassword());
         userDao.merge(user);
     }
     @Override

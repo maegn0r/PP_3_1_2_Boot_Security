@@ -9,6 +9,9 @@
 <div class="container">
     <form th:method="post" th:action="@{/update/(id = ${user.id})}" th:object="${user}">
         <input type="hidden" th:field="*{id}">
+        <label for="Имя пользователя">Введите имя: </label>
+        <input type="text" th:field="*{username}" id="Имя пользователя"/>
+        <br/>
         <label for="Имя">Введите имя: </label>
         <input type="text" th:field="*{name}" id="Имя"/>
         <br/>
@@ -18,6 +21,14 @@
         <label for="Возраст">Введите возраст: </label>
         <input type="text" th:field="*{age}" id="Возраст"/>
         <hr/>
+        <div class="mb-3">
+            <label for="Роль" class="form-label">Роль</label>
+            <select class="form-select" aria-label="Default select example" id="Роль" multiple="multiple" th:field="*{chosenRoles}">
+                <option th:each="roleValue : ${rolesList}"
+                        th:value="${roleValue.id}"
+                        th:text="${roleValue.name}"></option>
+            </select>
+        </div>
         <input type="submit" value="Сохранить"/>
     </form>
 </div>

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
 
 @Controller
 @RequestMapping("/")
@@ -16,6 +18,8 @@ public class UserController {
 
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+
+    private final RoleService roleService;
 
     @GetMapping(value = "/admin")
     public String usersList(ModelMap model) {
@@ -26,21 +30,23 @@ public class UserController {
     @GetMapping("/add")
     public String showFormForAddUser(ModelMap model){
         UserDto userDto = new UserDto();
+        model.addAttribute("rolesList",roleService.getListOfRoles());
         model.addAttribute("user", userDto);
         return "add";
 
     }
     @PostMapping(value = "/add")
-    public String addUser(@ModelAttribute("user") UserDto userDto){
+    public String addUser(@ModelAttribute ("user") UserDto userDto){
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userService.add(userDto);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
 
     @GetMapping("/update")
     public String showFormForUpdateUser(ModelMap model, @RequestParam(name = "id") Long id){
         UserDto userDto = userService.findById(id);
+        model.addAttribute("rolesList",roleService.getListOfRoles());
         model.addAttribute("user", userDto);
         return "update";
 
@@ -56,17 +62,18 @@ public class UserController {
     @PostMapping(value = "/update")
     public String updateUser(@ModelAttribute("user") UserDto userDto){
         userService.merge(userDto);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @DeleteMapping("/delete")
     public String deleteById(@RequestParam(name = "id") Long id) {
         userService.deleteById(id);
-        return "redirect:/";
+        return "redirect:/admin";
     }
     @Autowired
-    public UserController(PasswordEncoder passwordEncoder, UserService userService) {
+    public UserController(PasswordEncoder passwordEncoder, UserService userService, RoleService roleService) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        this.roleService = roleService;
     }
 }
