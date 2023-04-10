@@ -2,17 +2,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>User Dashboard</title>
+    <title>Информация о пользователе</title>
 </head>
-
+<body>
+<div th:replace="~{navbar :: navi}"></div>
 <div sec:authorize="isAuthenticated()">
-    <p>Logged as: <span sec:authentication="name"></span></p>
-    <p>Has role: <span sec:authentication="authorities"></span></p>
+    <p>Вы зашли под пользователем: <span sec:authentication="name"></span></p>
+    <p>Роли, назначенные Вам в системе: <span sec:authentication="authorities"></span></p>
     <div class="container">
-        <p th:text="${'Имя: ' + user.getName()}"></p>
-        <p th:text="${'Фамилия: ' + user.getSurname()}"></p>
-        <p th:text="${'Возраст: ' + user.getAge()}"></p>
+        <p th:text="${'Ваше имя: ' + user.getName()}"></p>
+        <p th:text="${'Ваша фамилия: ' + user.getSurname()}"></p>
+        <p th:text="${'Ваш возраст: ' + user.getAge()}"></p>
     </div>
-    <a th:href="@{/logout}">Log out</a>
 </div>
+</body>
 </html>

@@ -57,6 +57,7 @@ public class UserServiceImp implements UserService {
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
+        user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toList()));
         userDao.merge(user);
     }
     @Override

@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String showUserInfo(ModelMap model, Authentication authentication){
+    public String showLoggedInUserInfo(ModelMap model, Authentication authentication){
         UserDto userDto = userService.findByUsername(authentication.getName());
         model.addAttribute("user", userDto);
         return "user";
