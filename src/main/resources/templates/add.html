@@ -11,11 +11,11 @@
 
         <label for="Имя пользователя">Введите имя пользователя: </label>
         <input type="text" th:field="*{username}" id="Имя пользователя"/>
-        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Имя пользователя должно содержать не менее 4 символов</span>
+        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
         <br/>
         <label for="Пароль">Введите пароль: </label>
         <input type="password" th:field="*{password}" id="Пароль"/>
-        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Пароль должен содержать не менее 4 символов</span>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         <br/>
         <label for="Имя">Введите имя: </label>
         <input type="text" th:field="*{name}" id="Имя"/>
@@ -25,7 +25,7 @@
         <br/>
         <label for="Возраст">Введите возраст: </label>
         <input type="text" th:field="*{age}" id="Возраст"/>
-        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Введите возраст от 1 до 127</span>
+        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
         <hr/>
         <div>
             <label for="Роль">Роль</label>
