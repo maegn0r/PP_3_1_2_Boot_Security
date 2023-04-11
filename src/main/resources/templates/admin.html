@@ -7,11 +7,6 @@
 <body>
 <div th:replace="~{navbar :: navi}"></div>
 
-<div>
-    <a th:href="@{/add}">
-        <button type="button"> Добавить пользователя </button>
-    </a>
-</div>
 <div class="container">
     <span th:if="${users.size() == 0}">Пользователей нет</span>
     <div th:unless="${users.size() == 0}">

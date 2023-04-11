@@ -1,21 +1,26 @@
 package ru.kata.spring.boot_security.demo.dto;
 
-
 import ru.kata.spring.boot_security.demo.model.User;
 
+import javax.validation.constraints.*;
 import java.util.Set;
 
 public class UserDto {
     private Long id;
-
+    @NotBlank
+    @Size(min = 4, max = 50)
     private String username;
+
     private String name;
     private String surname;
+    @NotBlank
+    @Size(min = 4, max = 50)
     private String password;
+
     private Byte age;
     private Set<Long> chosenRoles;
 
-    public UserDto(String username, String password, String name, String surname, Byte age, Long id,Set<Long> chosenRoles) {
+    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles) {
         this.id = id;
         this.username = username;
         this.password = password;

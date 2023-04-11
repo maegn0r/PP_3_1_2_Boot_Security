@@ -7,6 +7,7 @@
 <h1>Произошла ошибка</h1>
 
 <body>
+<div th:replace="~{navbar :: navi}"></div>
 <p th:if="${url}">
   <b>Страница, на которой произошла ошибка</b> <span th:text="${url}">Page URL</span>
 </p>
@@ -20,7 +21,7 @@
         th:if="${error}" th:text="'('+${error}+')'">error ...</span>
 </p>
 
-<a th:href="@{/}">
+<a th:href="@{/admin}">
   <button type="button"> Вернуться на главную страницу </button>
 </a>
 

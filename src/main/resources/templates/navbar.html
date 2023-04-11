@@ -20,6 +20,11 @@
                         <button type="button"> На главную</button>
                     </a>
                 </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/add}">
+                        <button type="button"> Добавить пользователя </button>
+                    </a>
+                </li>
                 <li sec:authorize="isAuthenticated()">
                     <a th:href="@{/logout}">
                         <button type="button"> Выйти</button>

@@ -6,10 +6,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -24,7 +27,7 @@ public class UserController {
     @GetMapping(value = "/admin")
     public String usersList(ModelMap model) {
         model.addAttribute("users", userService.getListOfUsers());
-        return "users";
+        return "admin";
     }
 
     @GetMapping("/add")
@@ -36,7 +39,11 @@ public class UserController {
 
     }
     @PostMapping(value = "/add")
-    public String addUser(@ModelAttribute ("user") UserDto userDto){
+    public String addUser(@Valid @ModelAttribute ("user") UserDto userDto, BindingResult bindingResult,ModelMap model){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("rolesList",roleService.getListOfRoles());
+            return "add";
+        }
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userService.add(userDto);
         return "redirect:/admin";
