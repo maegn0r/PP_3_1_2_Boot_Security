@@ -30,8 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers( "/user").authenticated()
+                .antMatchers( "/user","/access-denied-error").authenticated()
                 .anyRequest().hasRole("ADMIN")
+                .and()
+                .exceptionHandling().accessDeniedPage("/access-denied-error")
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
