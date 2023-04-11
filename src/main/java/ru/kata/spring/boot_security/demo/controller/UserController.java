@@ -65,6 +65,12 @@ public class UserController {
         model.addAttribute("user", userDto);
         return "user";
     }
+    @GetMapping("user/{id}")
+    public String showUserInfo(ModelMap model, @PathVariable(name = "id") Long id){
+        UserDto userDto = userService.findById(id);
+        model.addAttribute("user", userDto);
+        return "user-info";
+    }
 
     @PostMapping(value = "/update")
     public String updateUser(@ModelAttribute("user") UserDto userDto){
