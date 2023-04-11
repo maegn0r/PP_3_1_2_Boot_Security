@@ -9,20 +9,20 @@
 <body>
 <div th:replace="~{navbar :: navi}"></div>
 <p th:if="${url}">
-  <b>Страница, на которой произошла ошибка</b> <span th:text="${url}">Page URL</span>
+  <b>Страница, на которой произошла ошибка</b> <span th:text="${url}">Страница, на которой произошла ошибка</span>
 </p>
 
 <p th:if="${timestamp}" id='created'>
-  <b>Время:</b> <span th:text="${timestamp}">Timestamp</span>
+  <b>Время:</b> <span th:text="${timestamp}">Время:</span>
 </p>
 
 <p th:if="${message}">
-  <b>message:</b> <span th:text="${message}">message</span> <span
+  <b>Что произошло:</b> <span th:text="${message}">Что произошло:</span> <span
         th:if="${error}" th:text="'('+${error}+')'">error ...</span>
 </p>
 
-<a th:href="@{/admin}">
-  <button type="button"> Вернуться на главную страницу </button>
+<a th:href="${url}">
+  <button type="button"> Назад </button>
 </a>
 
 <!--

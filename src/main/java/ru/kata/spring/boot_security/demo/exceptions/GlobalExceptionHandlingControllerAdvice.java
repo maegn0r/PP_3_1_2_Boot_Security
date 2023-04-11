@@ -35,7 +35,7 @@ public class GlobalExceptionHandlingControllerAdvice {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", exception);
-        mav.addObject("url", req.getRequestURL());
+        mav.addObject("url", req.getRequestURL() + "?" + req.getQueryString());
         mav.addObject("timestamp", new Date().toString());
         mav.addObject("message", exception.getMessage());
         mav.setViewName("my-error-page");
