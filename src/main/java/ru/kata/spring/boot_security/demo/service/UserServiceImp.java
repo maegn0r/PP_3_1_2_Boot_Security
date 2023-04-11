@@ -60,14 +60,11 @@ public class UserServiceImp implements UserService {
         if (!(user.getUsername().equals(userDto.getUsername())) && checkUserCount(userDto.getUsername()) >= 1L) {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
-        System.out.println(user.getUsername());
         user.setUsername(userDto.getUsername());
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
         user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toList()));
-        System.out.println(userDto.getUsername());
-        System.out.println(user.getUsername());
         userDao.merge(user);
     }
 
