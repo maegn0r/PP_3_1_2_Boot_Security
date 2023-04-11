@@ -16,8 +16,8 @@
   <b>Время:</b> <span th:text="${timestamp}">Timestamp</span>
 </p>
 
-<p th:if="${status}">
-  <b>Код ошибки:</b> <span th:text="${status}">status-code</span> <span
+<p th:if="${message}">
+  <b>message:</b> <span th:text="${message}">message</span> <span
         th:if="${error}" th:text="'('+${error}+')'">error ...</span>
 </p>
 

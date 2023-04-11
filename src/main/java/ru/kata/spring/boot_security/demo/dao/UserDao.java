@@ -12,7 +12,9 @@ public interface UserDao {
 
     User findById(Long id);
 
-    User findByUsername(String name);
+    User findByUsername(String username);
+
+    Long checkUserCount(String username);
 
     void merge(User user);
 

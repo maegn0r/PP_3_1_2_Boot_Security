@@ -27,6 +27,10 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void add(UserDto userDto) {
+        Long count = userDao.checkUserCount(userDto.getUsername());
+        if (count >= 1L) {
+            throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
+        }
         User user = new User(userDto);
         user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toList()));
         userDao.add(user);
@@ -37,6 +41,7 @@ public class UserServiceImp implements UserService {
     public List<UserDto> getListOfUsers() {
         return userDao.listUsers().stream().map(UserDto::new).collect(Collectors.toList());
     }
+
 
     @Override
     public UserDto findById(Long id) {
@@ -60,6 +65,7 @@ public class UserServiceImp implements UserService {
         user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toList()));
         userDao.merge(user);
     }
+
     @Override
     public UserDto findByUsername(String username) {
         return new UserDto(userDao.findByUsername(username));

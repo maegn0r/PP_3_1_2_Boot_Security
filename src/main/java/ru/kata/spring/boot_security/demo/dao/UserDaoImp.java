@@ -6,6 +6,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 
@@ -43,6 +44,12 @@ public class UserDaoImp implements UserDao {
                     + username);
         }
         return user;
+    }
+
+    @Override
+    public Long checkUserCount(String username) {
+        Query query = entityManager.createNativeQuery("SELECT COUNT(*) FROM users WHERE username = :username").setParameter("username", username);
+        return ((Number) query.getSingleResult()).longValue();
     }
 
     @Override
