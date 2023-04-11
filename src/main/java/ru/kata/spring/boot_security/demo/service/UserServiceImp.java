@@ -27,8 +27,7 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void add(UserDto userDto) {
-        Long count = userDao.checkUserCount(userDto.getUsername());
-        if (count >= 1L) {
+        if (checkUserCount(userDto.getUsername()) >= 1L) {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
         User user = new User(userDto);
@@ -58,11 +57,17 @@ public class UserServiceImp implements UserService {
     @Transactional
     public void merge(UserDto userDto) {
         User user = userDao.findById(userDto.getId());
+        if (!(user.getUsername().equals(userDto.getUsername())) && checkUserCount(userDto.getUsername()) >= 1L) {
+            throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
+        }
+        System.out.println(user.getUsername());
         user.setUsername(userDto.getUsername());
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
         user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toList()));
+        System.out.println(userDto.getUsername());
+        System.out.println(user.getUsername());
         userDao.merge(user);
     }
 
@@ -76,5 +81,11 @@ public class UserServiceImp implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.findByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getRoles());
+    }
+
+    @Override
+    public Long checkUserCount(String username){
+        Long count = userDao.checkUserCount(username);
+        return count;
     }
 }
