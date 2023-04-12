@@ -31,17 +31,18 @@ public class UserController {
     }
 
     @GetMapping("/add")
-    public String showFormForAddUser(ModelMap model){
+    public String showFormForAddUser(ModelMap model) {
         UserDto userDto = new UserDto();
-        model.addAttribute("rolesList",roleService.getListOfRoles());
+        model.addAttribute("rolesList", roleService.getListOfRoles());
         model.addAttribute("user", userDto);
         return "add";
 
     }
+
     @PostMapping(value = "/add")
-    public String addUser(@Valid @ModelAttribute ("user") UserDto userDto, BindingResult bindingResult,ModelMap model){
+    public String addUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("rolesList",roleService.getListOfRoles());
+            model.addAttribute("rolesList", roleService.getListOfRoles());
             return "add";
         }
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -51,31 +52,37 @@ public class UserController {
 
 
     @GetMapping("/update")
-    public String showFormForUpdateUser(ModelMap model, @RequestParam(name = "id") Long id){
+    public String showFormForUpdateUser(ModelMap model, @RequestParam(name = "id") Long id) {
         UserDto userDto = userService.findById(id);
-        model.addAttribute("rolesList",roleService.getListOfRoles());
+        model.addAttribute("rolesList", roleService.getListOfRoles());
         model.addAttribute("user", userDto);
         return "update";
 
     }
 
+    @PostMapping(value = "/update")
+    public String updateUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, ModelMap model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("rolesList", roleService.getListOfRoles());
+            return "update";
+        }
+        userService.merge(userDto);
+        return "redirect:/admin";
+    }
+
+
     @GetMapping("/user")
-    public String showLoggedInUserInfo(ModelMap model, Authentication authentication){
+    public String showLoggedInUserInfo(ModelMap model, Authentication authentication) {
         UserDto userDto = userService.findByUsername(authentication.getName());
         model.addAttribute("user", userDto);
         return "user";
     }
+
     @GetMapping("user/{id}")
-    public String showUserInfo(ModelMap model, @PathVariable(name = "id") Long id){
+    public String showUserInfo(ModelMap model, @PathVariable(name = "id") Long id) {
         UserDto userDto = userService.findById(id);
         model.addAttribute("user", userDto);
         return "user-info";
-    }
-
-    @PostMapping(value = "/update")
-    public String updateUser(@ModelAttribute("user") UserDto userDto){
-        userService.merge(userDto);
-        return "redirect:/admin";
     }
 
     @DeleteMapping("/delete")
@@ -83,6 +90,7 @@ public class UserController {
         userService.deleteById(id);
         return "redirect:/admin";
     }
+
     @Autowired
     public UserController(PasswordEncoder passwordEncoder, UserService userService, RoleService roleService) {
         this.passwordEncoder = passwordEncoder;

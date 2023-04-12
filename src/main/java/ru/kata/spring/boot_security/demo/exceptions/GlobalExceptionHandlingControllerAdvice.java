@@ -23,6 +23,7 @@ public class GlobalExceptionHandlingControllerAdvice {
     public GlobalExceptionHandlingControllerAdvice() {
         logger = LoggerFactory.getLogger(getClass());
     }
+
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception exception)
             throws Exception {

@@ -9,8 +9,13 @@
 <div class="container">
     <form th:method="post" th:action="@{/update/(id = ${user.id})}" th:object="${user}">
         <input type="hidden" th:field="*{id}">
-        <label for="Имя пользователя">Введите имя: </label>
+        <label for="Имя пользователя">Введите имя пользователя: </label>
         <input type="text" th:field="*{username}" id="Имя пользователя"/>
+        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+        <br/>
+        <label for="Пароль">Введите пароль: </label>
+        <input type="text" th:field="*{password}" id="Пароль"/>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         <br/>
         <label for="Имя">Введите имя: </label>
         <input type="text" th:field="*{name}" id="Имя"/>
@@ -32,6 +37,5 @@
         <input type="submit" value="Сохранить"/>
     </form>
 </div>
-
 </body>
 </html>

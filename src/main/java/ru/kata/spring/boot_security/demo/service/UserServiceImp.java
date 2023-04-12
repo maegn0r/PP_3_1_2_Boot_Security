@@ -81,7 +81,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public Long checkUserCount(String username){
+    public Long checkUserCount(String username) {
         Long count = userDao.checkUserCount(username);
         return count;
     }

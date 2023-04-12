@@ -25,7 +25,6 @@
         <br/>
         <label for="Возраст">Введите возраст: </label>
         <input type="text" th:field="*{age}" id="Возраст"/>
-        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
         <hr/>
         <div>
             <label for="Роль">Роль</label>
@@ -39,6 +38,5 @@
         <input type="submit" value="Сохранить"/>
     </form>
 </div>
-
 </body>
 </html>

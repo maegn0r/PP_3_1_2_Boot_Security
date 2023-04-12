@@ -17,5 +17,6 @@ public interface UserService extends UserDetailsService {
     void merge(UserDto userDto);
 
     UserDto findByUsername(String username);
+
     Long checkUserCount(String username);
 }

@@ -24,7 +24,7 @@ public class UserDto {
 
     private Collection<Role> roles;
 
-    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles,Collection<Role> roles) {
+    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, Collection<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
