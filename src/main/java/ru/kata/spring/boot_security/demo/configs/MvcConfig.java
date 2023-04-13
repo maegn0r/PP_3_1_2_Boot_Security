@@ -9,5 +9,8 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/access-denied-error").setViewName("access-denied-error");
         registry.addViewController("/").setViewName("redirect:/login");
+        registry.addViewController("/table").setViewName("table");
+        registry.addViewController("/admin-panel").setViewName("admin-panel");
+        registry.addViewController("/admin-panel-final").setViewName("admin_panel_final");
     }
 }

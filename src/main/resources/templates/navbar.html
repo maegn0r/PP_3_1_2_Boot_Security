@@ -7,30 +7,21 @@
 </head>
 <body>
 <nav th:fragment="navi">
-    <div>
-        <div>
-            <ul>
-                <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/user}">
-                        <button type="button"> Информация о Вашем пользователе</button>
-                    </a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/admin}">
-                        <button type="button"> На главную</button>
-                    </a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/admin/add}">
-                        <button type="button"> Добавить пользователя </button>
-                    </a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/logout}">
-                        <button type="button"> Выйти</button>
-                    </a>
-                </li>
-            </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>
+                    h3. Lorem ipsum dolor sit amet.
+                </h3>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin-panel">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">User</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
