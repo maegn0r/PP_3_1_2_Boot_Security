@@ -29,15 +29,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user", "/access-denied-error").authenticated()
-                .anyRequest().hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user","/error").hasAnyRole("ADMIN","USER")
+                .antMatchers("/").permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied-error")
                 .and()
                 .formLogin().successHandler(successUserHandler)
-                .permitAll()
                 .and()
                 .logout()
                 .permitAll();

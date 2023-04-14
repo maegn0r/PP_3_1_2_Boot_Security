@@ -1,10 +1,9 @@
 package ru.kata.spring.boot_security.demo.dto;
 
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.validation.constraints.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public class UserDto {
@@ -22,9 +21,9 @@ public class UserDto {
     private Byte age;
     private Set<Long> chosenRoles;
 
-    private Collection<Role> roles;
+    private List<String> roles;
 
-    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, Collection<Role> roles) {
+    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, List<String> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -45,14 +44,15 @@ public class UserDto {
         this.name = user.getName();
         this.surname = user.getSurname();
         this.age = user.getAge();
-        this.roles = user.getRoles();
+        this.roles = user.getRoleNames();
     }
 
-    public Collection<Role> getRoles() {
+    public List<String> getRoles() {
+        roles.replaceAll(i -> i.replaceAll("ROLE_", ""));
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<String> roles) {
         this.roles = roles;
     }
 

@@ -7,6 +7,8 @@ import ru.kata.spring.boot_security.demo.dto.UserDto;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -31,10 +33,10 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    private List<Role> roles;
 
 
-    public User(String name, String surname, Byte age, Collection<Role> roles) {
+    public User(String name, String surname, Byte age, List<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -92,17 +94,21 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
+    }
+
+    public List<String> getRoleNames(){
+        return roles.stream().map(Role::getName).collect(Collectors.toList());
     }
 
     @Override

@@ -26,17 +26,17 @@
                 <td th:text="${user.surname}" th:align="center"></td>
                 <td th:text="${user.age}" th:align="center"></td>
                 <td>
-                    <a th:href="@{/update/(id=${user.id})}">
+                    <a th:href="@{/admin/update/(id=${user.id})}">
                         <button type="button"> Редактировать </button>
                     </a>
                 </td>
                 <td>
-                    <a th:href="@{'/user/' + ${user.id}}">
+                    <a th:href="@{'/admin/user/' + ${user.id}}">
                         <button type="button"> Информация о пользователе </button>
                     </a>
                 </td>
                 <td>
-                    <form action="#" th:action="@{/delete(id=${user.id})}" th:method="delete" >
+                    <form action="#" th:action="@{/admin/delete(id=${user.id})}" th:method="delete" >
                         <button type="submit" class="btn"> Удалить </button>
                     </form>
                 </td>

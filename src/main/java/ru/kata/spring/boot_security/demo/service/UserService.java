@@ -18,5 +18,4 @@ public interface UserService extends UserDetailsService {
 
     UserDto findByUsername(String username);
 
-    Long checkUserCount(String username);
 }

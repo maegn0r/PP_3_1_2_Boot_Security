@@ -11,22 +11,22 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private RoleDao roleDao;
+    private final RoleDao roleDao;
 
 
     @Override
     public List<Role> getListOfRoles() {
-        return roleDao.listRoles();
+        return roleDao.findAll();
     }
 
     @Override
     public Role findRoleById(Long id) {
-        return roleDao.findById(id);
+        return roleDao.findById(id).orElseThrow(()-> new RuntimeException("Роли с таким ID нет в базе данных"));
     }
 
     @Override
     public Role findRoleByName(String name) {
-        return roleDao.findByName(name);
+        return roleDao.findByName(name).orElseThrow(()-> new RuntimeException("Роли с таким названием нет в базе данных"));
     }
 
     @Autowired

@@ -7,14 +7,14 @@
 <body>
 <div th:replace="~{navbar :: navi}"></div>
 <div class="container">
-    <form th:method="post" th:action="@{/update/(id = ${user.id})}" th:object="${user}">
+    <form th:method="post" th:action="@{/admin/update/(id = ${user.id})}" th:object="${user}">
         <input type="hidden" th:field="*{id}">
         <label for="Имя пользователя">Введите имя пользователя: </label>
         <input type="text" th:field="*{username}" id="Имя пользователя"/>
         <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
         <br/>
         <label for="Пароль">Введите пароль: </label>
-        <input type="text" th:field="*{password}" id="Пароль"/>
+        <input type="password" th:field="*{password}" id="Пароль"/>
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         <br/>
         <label for="Имя">Введите имя: </label>
