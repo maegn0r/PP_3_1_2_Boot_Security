@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ошибка</title>
+</head>
+<h1>Произошла ошибка</h1>
+
+<body>
+<div th:replace="~{navbar :: navi}"></div>
+<p th:if="${url}">
+  <b>Страница, на которой произошла ошибка</b> <span th:text="${url}">Страница, на которой произошла ошибка</span>
+</p>
+
+<p th:if="${timestamp}" id='created'>
+  <b>Время:</b> <span th:text="${timestamp}">Время:</span>
+</p>
+
+<p th:if="${message}">
+  <b>Что произошло:</b> <span th:text="${message}">Что произошло:</span> <span
+        th:if="${error}" th:text="'('+${error}+')'">error ...</span>
+</p>
+
+<a th:href="${url}">
+  <button type="button"> Назад </button>
+</a>
+
+</body>
+</html>

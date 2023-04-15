@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <title>Информация о пользователе</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-
-
+<div th:replace="~{navbar :: navi}"></div>
+<div sec:authorize="isAuthenticated()">
+    <p>Вы зашли под пользователем: <span sec:authentication="name"></span></p>
+    <p>Роли, назначенные Вам в системе: <span sec:authentication="authorities"></span></p>
+    <div class="container">
+        <p th:text="${'Ваше имя: ' + user.getName()}"></p>
+        <p th:text="${'Ваша фамилия: ' + user.getSurname()}"></p>
+        <p th:text="${'Ваш возраст: ' + user.getAge()}"></p>
+    </div>
+</div>
 </body>
 </html>

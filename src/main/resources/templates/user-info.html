@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <title>Информация о пользователе</title>
+</head>
+<body>
+<div th:replace="~{navbar :: navi}"></div>
+<div sec:authorize="isAuthenticated()">
+    <div class="container">
+        <p th:text="${'Имя пользователя (логин) : ' + user.getUsername()}"></p>
+        <p th:text="${'Имя пользователя: ' + user.getName()}"></p>
+        <p th:text="${'Фамилия пользователя: ' + user.getSurname()}"></p>
+        <p th:text="${'Возраст пользователя ' + user.getAge()}"></p>
+        <p th:text="${'Роли, назначенные пользователю в системе ' + user.getRoles()}"></p>
+    </div>
+</div>
+</body>
+</html>
