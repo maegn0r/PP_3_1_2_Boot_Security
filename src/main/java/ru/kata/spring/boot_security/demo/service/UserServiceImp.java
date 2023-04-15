@@ -31,7 +31,7 @@ public class UserServiceImp implements UserService {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
         User user = new User(userDto);
-        user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toList()));
+        user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toSet()));
         userDao.save(user);
     }
 
@@ -64,7 +64,7 @@ public class UserServiceImp implements UserService {
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
-        user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toList()));
+        user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toSet()));
         userDao.save(user);
     }
 
