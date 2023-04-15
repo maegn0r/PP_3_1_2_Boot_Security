@@ -22,10 +22,10 @@ public class AdminController {
     private final RoleService roleService;
 
 
-    @GetMapping()
+    @GetMapping("/table")
     public String usersList(ModelMap model) {
         model.addAttribute("users", userService.getListOfUsers());
-        return "admin";
+        return "admin_panel_final";
     }
 
     @GetMapping("/add")
@@ -45,7 +45,7 @@ public class AdminController {
         }
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userService.add(userDto);
-        return "redirect:/admin";
+        return "redirect:/admin/table";
     }
 
 
@@ -65,7 +65,7 @@ public class AdminController {
             return "update";
         }
         userService.merge(userDto);
-        return "redirect:/admin";
+        return "redirect:/admin/table";
     }
 
 
@@ -86,7 +86,7 @@ public class AdminController {
     @DeleteMapping("/delete")
     public String deleteById(@RequestParam(name = "id") Long id) {
         userService.deleteById(id);
-        return "redirect:/admin";
+        return "redirect:/admin/table";
     }
 
     @Autowired
