@@ -29,10 +29,11 @@
         <hr/>
         <div>
             <label for="Роль">Роль</label>
-            <select id="Роль" multiple="multiple" th:field="*{chosenRoles}">
+            <select id="Роль" multiple="multiple" th:field="*{roles}">
                 <option th:each="roleValue : ${rolesList}"
-                        th:value="${roleValue.id}"
-                        th:text="${roleValue.name}"></option>
+                        th:value="${roleValue}">
+<!--                        th:text="${roleValue}"-->
+                </option>
             </select>
         </div>
         <input type="submit" value="Сохранить"/>

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +33,7 @@ public class UserServiceImp implements UserService {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
         User user = new User(userDto);
-        user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toSet()));
+//        user.setRoles(userDto.getRoles().stream().map(roleService::findRoleByName).collect(Collectors.toSet()));
         userDao.save(user);
     }
 
@@ -60,11 +62,14 @@ public class UserServiceImp implements UserService {
         if (!(user.getUsername().equals(userDto.getUsername())) && userDao.findByUsername(userDto.getUsername()).isPresent()) {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
-        user.setUsername(userDto.getUsername());
+//        Set<String> chosenRoles = userDto.getRoles().stream().map(i -> "ROLE_"+i).collect(Collectors.toSet());
+        user.setUsername(user.getUsername());
+        System.out.println(userDto.getName());
         user.setName(userDto.getName());
+        System.out.println(userDto.getSurname());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
-        user.setRoles(userDto.getChosenRoles().stream().map(roleService::findRoleById).collect(Collectors.toSet()));
+//        user.setRoles(chosenRoles.stream().map(roleService::findRoleByName).collect(Collectors.toSet()));
         userDao.save(user);
     }
 

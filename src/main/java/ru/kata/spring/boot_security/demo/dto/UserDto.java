@@ -1,29 +1,29 @@
 package ru.kata.spring.boot_security.demo.dto;
 
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserDto {
     private Long id;
-    @NotBlank
-    @Size(min = 4, max = 50)
+
     private String username;
 
     private String name;
     private String surname;
-    @NotBlank
-    @Size(min = 4, max = 50)
+
     private String password;
 
     private Byte age;
     private Set<Long> chosenRoles;
 
-    private List<String> roles;
+    private List <String> roles;
 
-    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, List<String> roles) {
+    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, List <String> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -47,12 +47,15 @@ public class UserDto {
         this.roles = user.getRoleNames();
     }
 
-    public List<String> getRoles() {
-        roles.replaceAll(i -> i.replaceAll("ROLE_", ""));
+    public List <String> getRoles() {
+//        roles.replaceAll(i -> i.replaceAll("ROLE_", ""));
         return roles;
     }
+    public String getRolesAsString() {
+        return roles.stream().sorted().collect(Collectors.joining(" ")).replaceAll("ROLE_", "");
+    }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(List <String> roles) {
         this.roles = roles;
     }
 

@@ -6,7 +6,9 @@ import ru.kata.spring.boot_security.demo.dao.RoleDao;
 
 import ru.kata.spring.boot_security.demo.model.Role;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -17,6 +19,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> getListOfRoles() {
         return roleDao.findAll();
+    }
+
+    @Override
+    public List<String> getListOfRolesAsString() {
+        return roleDao.findAll().stream().map(i -> i.getName().replaceAll("ROLE_", "")).collect(Collectors.toList());
     }
 
     @Override

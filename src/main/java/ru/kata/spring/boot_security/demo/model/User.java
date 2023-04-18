@@ -6,9 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -34,7 +32,7 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new LinkedHashSet<>();
 
 
     public User(String name, String surname, Byte age, Set<Role> roles) {
@@ -108,8 +106,8 @@ public class User implements UserDetails {
         return getRoles();
     }
 
-    public List<String> getRoleNames(){
-        return roles.stream().map(Role::getName).collect(Collectors.toList());
+    public List <String> getRoleNames(){
+        return roles.stream().map(Role::getName).sorted().collect(Collectors.toList());
     }
 
     @Override
