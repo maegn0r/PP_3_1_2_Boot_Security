@@ -32,8 +32,9 @@ public class UserServiceImp implements UserService {
         if (userDao.findByUsername(userDto.getUsername()).isPresent()) {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
+        List<String> chosenRoles = userDto.getRoles().stream().map(i -> "ROLE_"+i).collect(Collectors.toList());
         User user = new User(userDto);
-//        user.setRoles(userDto.getRoles().stream().map(roleService::findRoleByName).collect(Collectors.toSet()));
+        user.setRoles(chosenRoles.stream().map(roleService::findRoleByName).collect(Collectors.toSet()));
         userDao.save(user);
     }
 
@@ -62,14 +63,12 @@ public class UserServiceImp implements UserService {
         if (!(user.getUsername().equals(userDto.getUsername())) && userDao.findByUsername(userDto.getUsername()).isPresent()) {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
-//        Set<String> chosenRoles = userDto.getRoles().stream().map(i -> "ROLE_"+i).collect(Collectors.toSet());
+        List<String> chosenRoles = userDto.getRoles().stream().map(i -> "ROLE_"+i).collect(Collectors.toList());
         user.setUsername(user.getUsername());
-        System.out.println(userDto.getName());
         user.setName(userDto.getName());
-        System.out.println(userDto.getSurname());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
-//        user.setRoles(chosenRoles.stream().map(roleService::findRoleByName).collect(Collectors.toSet()));
+        user.setRoles(chosenRoles.stream().map(roleService::findRoleByName).collect(Collectors.toSet()));
         userDao.save(user);
     }
 

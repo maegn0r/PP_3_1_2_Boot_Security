@@ -62,14 +62,7 @@
                                 <td><span th:text="${user.age}"> series </span></td>
                                 <td><span th:text="${user.username}"> series </span></td>
                                 <td><span th:text="${user.getRolesAsString()}"> series </span></td>
-                                <td><button type="button" class="btn btn-info" data-toggle="modal" th:attr="data-target='#modalEdit'+${user.id}">edit</button></td>
-                                <td>
-<!--                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"-->
-<!--                                            data-bs-target="#modalEdit" style="color: white"-->
-<!--                                            th:data-bs-target="'#modalEdit'+${user.id}">Edit-->
-<!--                                    </button>-->
-
-                                </td>
+                                <td><button type="button" class="btn btn-info" data-toggle="modal" th:attr="data-target='#userEditModal'+${user.id}">edit</button></td>
                                 <td><button type="button" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#userDeleteModal'+${user.id}">delete</button></td>
                                 <div th:replace="modals::edit-modal"></div>
                                 <div th:replace="modals::delete-modal"></div>

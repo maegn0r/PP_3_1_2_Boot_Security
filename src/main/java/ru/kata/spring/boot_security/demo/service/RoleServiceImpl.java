@@ -22,7 +22,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<String> getListOfRolesAsString() {
+    public List<String> getListOfRolesAsListOfStrings() {
         return roleDao.findAll().stream().map(i -> i.getName().replaceAll("ROLE_", "")).collect(Collectors.toList());
     }
 
