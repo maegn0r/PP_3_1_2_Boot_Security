@@ -64,12 +64,12 @@
                                 <td><span th:text="${user.getRolesAsString()}"> series </span></td>
                                 <td>
                                     <button type="button" class="btn btn-info" data-toggle="modal"
-                                            th:attr="data-target='#userEditModal'+${user.id}">edit
+                                            th:attr="data-target='#userEditModal'+${user.id}">Edit
                                     </button>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-danger" data-toggle="modal"
-                                            th:attr="data-target='#userDeleteModal'+${user.id}">delete
+                                            th:attr="data-target='#userDeleteModal'+${user.id}">Delete
                                     </button>
                                 </td>
                                 <div th:replace="modals::edit-modal"></div>

@@ -48,12 +48,15 @@ public class UserDto {
     }
 
     public List<String> getRoles() {
-//        roles.replaceAll(i -> i.replaceAll("ROLE_", ""));
         return roles;
     }
 
     public String getRolesAsString() {
         return roles.stream().sorted().collect(Collectors.joining(" ")).replaceAll("ROLE_", "");
+    }
+
+    public List<String> getListOfStringNameOfRolesWithoutRole() {
+        return roles.stream().sorted().map(i -> i.replaceAll("ROLE_", "")).collect(Collectors.toList());
     }
 
     public void setRoles(List<String> roles) {

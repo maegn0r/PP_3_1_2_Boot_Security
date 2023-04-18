@@ -100,7 +100,96 @@
         </div>
     </div>
 </div>
-<div class="modal fade" th:fragment="delete-modal" th:id="'userDeleteModal'+${user.id}" tabindex="-1" role="dialog"
+<div class="modal fade" th:fragment="delete-modal" th:id="'userDeleteModal'+${user.id}" tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form role="form"
+                          th:action="@{/admin/delete}" th:object="${user}" th:method="delete">
+                        <div class="container col-8 text-center">
+
+                                <label for="id"
+                                       class="font-weight-bold">ID
+                                <input th:value="${user.id}"
+                                       th:name="id"
+                                       type="number" readonly
+                                       class="form-control">
+                                </label>
+                            </p>
+                            <p>
+                                <label for="delFirstName"
+                                       class="font-weight-bold">First
+                                    Name
+                                <input th:value="${user.name}"
+                                       th:name="delFirstName"
+                                       id="delFirstName"
+                                       type="text" class="form-control"
+                                       readonly>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="delLastName"
+                                       class="font-weight-bold">Last
+                                    Name
+                                <input th:value="${user.surname}"
+                                       th:name="delLastName"
+                                       id="delLastName"
+                                       type="text" class="form-control"
+                                       readonly>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="delAge" class="font-weight-bold">Age
+                                <input th:value="${user.age}"
+                                       type="number" class="form-control"
+                                       readonly
+                                       id="delAge">
+                                </label>
+                            </p>
+                            <p>
+                                <label for="delUsername"
+                                       class="font-weight-bold">Email
+                                <input th:value="${user.username}"
+                                       type="text" class="form-control"
+                                       readonly
+                                       id="delUsername">
+                                </label>
+                            </p>
+                            <p>
+                                <label for="delRoles" class="font-weight-bold">Role
+                                <select multiple
+                                        class="form-control form-control-sm"
+                                        style="width:210px"
+                                        readonly
+                                        id="delRoles"
+                                        name="delRoles" size="2" required>
+                                    <option th:each="role : ${user.getListOfStringNameOfRolesWithoutRole()}"
+                                            th:text="${role}">
+                                    </option>
+                                </select>
+                                </label>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <a th:href="@{/admin/delete(id=${user.id})}" class="btn btn-danger" th:method="delete">Delete</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" th:fragment="delete-modal2" th:id="'userDeleteModal2'+${user.id}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
