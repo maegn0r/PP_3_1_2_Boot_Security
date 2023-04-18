@@ -28,12 +28,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findRoleById(Long id) {
-        return roleDao.findById(id).orElseThrow(()-> new RuntimeException("Роли с таким ID нет в базе данных"));
+        return roleDao.findById(id).orElseThrow(() -> new RuntimeException("Роли с таким ID нет в базе данных"));
     }
 
     @Override
     public Role findRoleByName(String name) {
-        return roleDao.findByName(name).orElseThrow(()-> new RuntimeException("Роли с таким названием нет в базе данных"));
+        return roleDao.findByName(name).orElseThrow(() -> new RuntimeException("Роли с таким названием нет в базе данных"));
     }
 
     @Autowired

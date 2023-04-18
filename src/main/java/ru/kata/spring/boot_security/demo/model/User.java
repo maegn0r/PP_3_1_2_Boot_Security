@@ -106,7 +106,7 @@ public class User implements UserDetails {
         return getRoles();
     }
 
-    public List <String> getRoleNames(){
+    public List<String> getRoleNames() {
         return roles.stream().map(Role::getName).sorted().collect(Collectors.toList());
     }
 

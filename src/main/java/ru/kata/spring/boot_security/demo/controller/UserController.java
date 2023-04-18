@@ -10,7 +10,6 @@ import ru.kata.spring.boot_security.demo.dto.UserDto;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 
-
 @Controller
 @RequestMapping("/user")
 public class UserController {

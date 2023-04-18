@@ -32,9 +32,8 @@ public class UserServiceImp implements UserService {
         if (userDao.findByUsername(userDto.getUsername()).isPresent()) {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
-        List<String> chosenRoles = userDto.getRoles().stream().map(i -> "ROLE_"+i).collect(Collectors.toList());
         User user = new User(userDto);
-        user.setRoles(chosenRoles.stream().map(roleService::findRoleByName).collect(Collectors.toSet()));
+        user.setRoles(userDto.getRoles().stream().map(i -> roleService.findRoleByName("ROLE_" + i)).collect(Collectors.toSet()));
         userDao.save(user);
     }
 
@@ -47,7 +46,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserDto findById(Long id) {
-        return new UserDto(userDao.findById(id).orElseThrow(()-> new RuntimeException("Пользователя с таким ID нет в базе данных")));
+        return new UserDto(userDao.findById(id).orElseThrow(() -> new RuntimeException("Пользователя с таким ID нет в базе данных")));
     }
 
     @Override
@@ -59,28 +58,27 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void merge(UserDto userDto) {
-        User user = userDao.findById(userDto.getId()).orElseThrow(()-> new RuntimeException("Пользователя с таким ID нет в базе данных"));
+        User user = userDao.findById(userDto.getId()).orElseThrow(() -> new RuntimeException("Пользователя с таким ID нет в базе данных"));
         if (!(user.getUsername().equals(userDto.getUsername())) && userDao.findByUsername(userDto.getUsername()).isPresent()) {
             throw new UnsupportedOperationException("Пользователь с таким именем уже существует!");
         }
-        List<String> chosenRoles = userDto.getRoles().stream().map(i -> "ROLE_"+i).collect(Collectors.toList());
         user.setUsername(user.getUsername());
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
-        user.setRoles(chosenRoles.stream().map(roleService::findRoleByName).collect(Collectors.toSet()));
+        user.setRoles(userDto.getRoles().stream().map(i -> roleService.findRoleByName("ROLE_" + i)).collect(Collectors.toSet()));
         userDao.save(user);
     }
 
     @Override
     public UserDto findByUsername(String username) {
-        return new UserDto(userDao.findByUsername(username).orElseThrow(()-> new RuntimeException("Пользователя с таким именем нет в базе данных")));
+        return new UserDto(userDao.findByUsername(username).orElseThrow(() -> new RuntimeException("Пользователя с таким именем нет в базе данных")));
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByUsername(username).orElseThrow(()-> new RuntimeException("Пользователя с таким именем нет в базе данных"));
+        User user = userDao.findByUsername(username).orElseThrow(() -> new RuntimeException("Пользователя с таким именем нет в базе данных"));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getRoles());
     }
 }

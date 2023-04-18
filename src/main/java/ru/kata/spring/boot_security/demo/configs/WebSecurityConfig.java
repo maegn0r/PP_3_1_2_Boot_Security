@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user","/error").hasAnyRole("ADMIN","USER")
+                .antMatchers("/user", "/error").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied-error")

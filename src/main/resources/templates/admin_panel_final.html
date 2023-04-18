@@ -39,18 +39,18 @@
                         </div>
                     </nav>
                     <span th:if="${users.size() == 0}">Пользователей нет</span>
-                    <div class="m-4" th:unless="${users.size() == 0}" >
+                    <div class="m-4" th:unless="${users.size() == 0}">
                         <table class="table table-striped border">
                             <thead>
                             <tr>
-                                <th> ID </th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Age </th>
-                                <th> Email </th>
-                                <th> Role </th>
-                                <th> Edit </th>
-                                <th> Delete </th>
+                                <th> ID</th>
+                                <th> First Name</th>
+                                <th> Last Name</th>
+                                <th> Age</th>
+                                <th> Email</th>
+                                <th> Role</th>
+                                <th> Edit</th>
+                                <th> Delete</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -62,8 +62,16 @@
                                 <td><span th:text="${user.age}"> series </span></td>
                                 <td><span th:text="${user.username}"> series </span></td>
                                 <td><span th:text="${user.getRolesAsString()}"> series </span></td>
-                                <td><button type="button" class="btn btn-info" data-toggle="modal" th:attr="data-target='#userEditModal'+${user.id}">edit</button></td>
-                                <td><button type="button" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#userDeleteModal'+${user.id}">delete</button></td>
+                                <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                            th:attr="data-target='#userEditModal'+${user.id}">edit
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            th:attr="data-target='#userDeleteModal'+${user.id}">delete
+                                    </button>
+                                </td>
                                 <div th:replace="modals::edit-modal"></div>
                                 <div th:replace="modals::delete-modal"></div>
                             </tr>

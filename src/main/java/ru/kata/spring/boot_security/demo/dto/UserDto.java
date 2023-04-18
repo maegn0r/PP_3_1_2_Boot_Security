@@ -21,9 +21,9 @@ public class UserDto {
     private Byte age;
     private Set<Long> chosenRoles;
 
-    private List <String> roles;
+    private List<String> roles;
 
-    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, List <String> roles) {
+    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, List<String> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -47,15 +47,16 @@ public class UserDto {
         this.roles = user.getRoleNames();
     }
 
-    public List <String> getRoles() {
+    public List<String> getRoles() {
 //        roles.replaceAll(i -> i.replaceAll("ROLE_", ""));
         return roles;
     }
+
     public String getRolesAsString() {
         return roles.stream().sorted().collect(Collectors.joining(" ")).replaceAll("ROLE_", "");
     }
 
-    public void setRoles(List <String> roles) {
+    public void setRoles(List<String> roles) {
         this.roles = roles;
     }
 

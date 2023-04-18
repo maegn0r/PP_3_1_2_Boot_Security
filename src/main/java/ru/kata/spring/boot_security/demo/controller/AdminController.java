@@ -57,15 +57,7 @@ public class AdminController {
 
     @PostMapping(value = "/update")
     public String updateUser(@ModelAttribute("user") UserDto userDto) {
-        UserDto dtoForUpdate = new UserDto();
-        dtoForUpdate.setId(userDto.getId());
-        dtoForUpdate.setName(userDto.getName());
-        dtoForUpdate.setSurname(userDto.getSurname());
-        dtoForUpdate.setUsername(userDto.getUsername());
-        dtoForUpdate.setAge(userDto.getAge());
-        dtoForUpdate.setPassword(userDto.getPassword());
-        dtoForUpdate.setRoles(userDto.getRoles());
-        userService.merge(dtoForUpdate);
+        userService.merge(userDto);
         return "redirect:/admin/table";
     }
 
