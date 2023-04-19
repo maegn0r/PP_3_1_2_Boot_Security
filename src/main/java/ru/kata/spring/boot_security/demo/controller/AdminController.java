@@ -7,11 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,15 +24,7 @@ public class AdminController {
         model.addAttribute("users", userService.getListOfUsers());
         model.addAttribute("user", new UserDto());
         model.addAttribute("rolesList", roleService.getListOfRolesAsListOfStrings());
-        return "admin_panel_final";
-    }
-
-    @GetMapping("/add")
-    public String showFormForAddUser(ModelMap model) {
-        UserDto userDto = new UserDto();
-        model.addAttribute("rolesList", roleService.getListOfRolesAsListOfStrings());
-        model.addAttribute("user", userDto);
-        return "add-user";
+        return "admin-panel-final";
     }
 
     @PostMapping(value = "/add")
@@ -45,15 +34,6 @@ public class AdminController {
         return "redirect:/admin/table";
     }
 
-
-    @GetMapping("/update")
-    public String showFormForUpdateUser(ModelMap model, @RequestParam(name = "id") Long id) {
-        UserDto userDto = userService.findById(id);
-        List<Role> rolesList = roleService.getListOfRoles();
-        model.addAttribute("rolesList", rolesList);
-        model.addAttribute("user", userDto);
-        return "update";
-    }
 
     @PostMapping(value = "/update")
     public String updateUser(@ModelAttribute("user") UserDto userDto) {
