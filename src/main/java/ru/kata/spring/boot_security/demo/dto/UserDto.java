@@ -1,9 +1,7 @@
 package ru.kata.spring.boot_security.demo.dto;
 
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
-import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
