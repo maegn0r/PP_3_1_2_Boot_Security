@@ -3,10 +3,10 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
-
 import ru.kata.spring.boot_security.demo.model.Role;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -20,13 +20,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public List<String> getListOfRolesAsListOfStrings() {
+        return roleDao.findAll().stream().map(i -> i.getName().replaceAll("ROLE_", "")).collect(Collectors.toList());
+    }
+
+    @Override
     public Role findRoleById(Long id) {
-        return roleDao.findById(id).orElseThrow(()-> new RuntimeException("Роли с таким ID нет в базе данных"));
+        return roleDao.findById(id).orElseThrow(() -> new RuntimeException("Роли с таким ID нет в базе данных"));
     }
 
     @Override
     public Role findRoleByName(String name) {
-        return roleDao.findByName(name).orElseThrow(()-> new RuntimeException("Роли с таким названием нет в базе данных"));
+        return roleDao.findByName(name).orElseThrow(() -> new RuntimeException("Роли с таким названием нет в базе данных"));
     }
 
     @Autowired

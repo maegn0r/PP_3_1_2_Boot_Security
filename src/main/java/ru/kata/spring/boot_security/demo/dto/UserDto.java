@@ -2,20 +2,18 @@ package ru.kata.spring.boot_security.demo.dto;
 
 import ru.kata.spring.boot_security.demo.model.User;
 
-import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserDto {
     private Long id;
-    @NotBlank
-    @Size(min = 4, max = 50)
+
     private String username;
 
     private String name;
     private String surname;
-    @NotBlank
-    @Size(min = 4, max = 50)
+
     private String password;
 
     private Byte age;
@@ -48,8 +46,15 @@ public class UserDto {
     }
 
     public List<String> getRoles() {
-        roles.replaceAll(i -> i.replaceAll("ROLE_", ""));
         return roles;
+    }
+
+    public String getRolesAsString() {
+        return roles.stream().sorted().collect(Collectors.joining(" ")).replaceAll("ROLE_", "");
+    }
+
+    public List<String> getListOfStringNameOfRolesWithoutRole() {
+        return roles.stream().sorted().map(i -> i.replaceAll("ROLE_", "")).collect(Collectors.toList());
     }
 
     public void setRoles(List<String> roles) {
