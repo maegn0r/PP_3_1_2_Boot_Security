@@ -24,7 +24,7 @@ function changeUserAction() {
         password: document.getElementById('pass').value,
         roles: currentRoles
     };
-    fetch('http://localhost:8080/admin/users/',{
+    fetch('http://localhost:8080/api/v1/admin/users',{
         method: 'PUT',
         headers: {
             'Content-Type' : 'application/json;charset=utf-8'

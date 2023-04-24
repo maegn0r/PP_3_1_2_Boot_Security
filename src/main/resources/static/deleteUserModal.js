@@ -1,6 +1,6 @@
 function drawDeleteModal(id) {
     console.log('Tub user №' + id + ' push!');
-    let url = 'http://localhost:8080/admin/users/' + id;
+    let url = 'http://localhost:8080/api/v1/admin/users/' + id;
     let body = '';
     fetch(url)
         .then(response => response.json())
