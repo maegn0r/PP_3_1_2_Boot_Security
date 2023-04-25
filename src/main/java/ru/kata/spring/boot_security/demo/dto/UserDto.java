@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.dto;
 
 import ru.kata.spring.boot_security.demo.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,9 +20,9 @@ public class UserDto {
     private Byte age;
     private Set<Long> chosenRoles;
 
-    private List<String> roles;
+    private ArrayList<String> roles;
 
-    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, List<String> roles) {
+    public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, ArrayList<String> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -53,11 +54,11 @@ public class UserDto {
         return roles.stream().sorted().collect(Collectors.joining(" ")).replaceAll("ROLE_", "");
     }
 
-    public List<String> getListOfStringNameOfRolesWithoutRole() {
-        return roles.stream().sorted().map(i -> i.replaceAll("ROLE_", "")).collect(Collectors.toList());
+    public ArrayList<String> getListOfStringNameOfRolesWithoutRole() {
+        return roles.stream().sorted().map(i -> i.replaceAll("ROLE_", "")).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(ArrayList<String> roles) {
         this.roles = roles;
     }
 

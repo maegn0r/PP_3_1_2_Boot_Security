@@ -1,77 +1,222 @@
-let url = 'http://localhost:8080/api/v1/admin/users'
+const data = document.getElementById("tableUserBody");
+const url = 'http://localhost:8080/api/v1/admin/users/user';
+const panel = document.getElementById("admin-header");
 
-fetch(url)
-    .then(response => response.json())
-    .then(data => fillingAll(data))
-    .catch(error => console.log(error))
+function userAuthInfo() {
+    fetch(url)
+        .then((res) => res.json())
+        .then((user) => {
 
-function fillingAll(data) {
-    let body = `<ui class="nav nav-tabs">
-    
-        <li class="nav-item">
-            <a class="nav-link active" href="/api/v1/admin/users" th:method="get" style="color:black">User table</a>
-        </li>
-        <li class="nav-item">
-            <a onclick="fillingAddForm()" class="nav-link" style="color:blue">New user</a>
-        </li>
-        </ui>
-        <div class="container shadow-lg p3 bg-body rounded">
-        <div class="tab-content">               
-            <h5 style="font-weight: bold">
-                All users
-            </h5>
-        </div>
-        <div class="container shadow-lg p3 mb-5 bg-body rounded">
-            <table class="table bg-white table-striped table-borderless border-top w-90">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Age</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>`
+            let temp = '';
 
-
-    for (let i = 0; i < data.length; i++) {
-        let roles = data[i].roles;
-        let rolesAsString = '';
-        // for (let a = 0; a < roles.length; a++) {
-        //     rolesAsString += roles[a].role.substring(0, 5);
-        //     rolesAsString += a<(roles.length-1) ? ", " : "";
-        // }
-        body += `<tr id="tr№${data[i].id}">
-                    <td id="id:${data[i].id}">${data[i].id}</td>
-                    <td id="firstname:${data[i].id}">${data[i].name}</td>
-                    <td id="lastname:${data[i].id}">${data[i].surname}</td>
-                    <td id="age:${data[i].id}">${data[i].age}</td>
-                    <td id="email:${data[i].id}">${data[i].username}</td>
-                    <td id="roles:${data[i].id}">${data[i].rolesAsString}</td>
-                    <td>
-                        <div class="all-classes-container">
-                        <button id="changeButton" type="button" class="btn btn-info btn-sm" data-toggle="modal" 
-                                data-target="#changeModal" onclick="drawChangeModal(${data[i].id})">
-                            Edit
-                        </button>
-                    </div>
-                    </td>
-                    <td>
-                        <button id="deleteButton" type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal" onclick="drawDeleteModal(${data[i].id})">
-                            Delete
-                        </button>
-                    </td>
-                 </tr>`
-
-    }
-    body += `</tbody></table></div>`
-    document.getElementById('adminPanel').innerHTML = body;
-
+            temp += `<tr>
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.surname}</td>
+            <td>${user.age}</td>
+            <td>${user.username}</td>
+            <td>${user.rolesAsString}</td> 
+            </tr>`;
+            data.innerHTML = temp;
+            panel.innerHTML = `<h5>${user.username} with roles: ${user.rolesAsString}</h5>`
+        });
 }
 
+userAuthInfo()
 
+
+const URL = "/api/v1/admin/users";
+
+$(document).ready(function () {
+    getUsers();
+})
+
+function getUsers() {
+    fetch(URL)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (users) {
+            let placeholder = document.getElementById('data_output');
+            let out = "";
+            for (let user of users) {
+                out += '<tr>';
+                out += '<td>' + user.id + '</td>';
+                out += '<td>' + user.name + '</td>';
+                out += '<td>' + user.surname + '</td>';
+                out += '<td>' + user.age + '</td>';
+                out += '<td>' + user.username + '</td>';
+                out += '<td>' + user.rolesAsString + '</td>';
+
+                // let i, role = "";
+                // for (i in user.roles) {
+                //     if (user.roles[i].role === "ROLE_USER") {
+                //         role = "USER";
+                //     } else {
+                //         role = "ADMIN";
+                //     }
+                //     if (user.roles.length === 1) {
+                //         out += "<td>" + role + "</td>";
+                //     } else if (i == 0) {
+                //         out += "<td>" + role + ", ";
+                //     } else {
+                //         out += role + "</td>";
+                //     }
+                // }
+                out += '<td>' +
+                    '<button type="button" class="btn btn-info" data-bs-target="#editModal" data-bs-toggle="modal" ' +
+                    'onclick="getEditModal(' + user.id + ')">' + 'Edit' +
+                    '</button>' +
+                    '</td>';
+                out += '<td>' +
+                    '<button type="button" class="btn btn-danger" data-bs-target="#deleteModal" data-bs-toggle="modal" ' +
+                    'onclick="getDeleteModal(' + user.id + ')">' + 'Delete' +
+                    '</button>' +
+                    '</td>';
+                out += '</tr>';
+            }
+
+            placeholder.innerHTML = out;
+        });
+}
+
+function getEditModal(id) {
+    fetch(URL + '/' + id, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then(res => {
+        res.json()
+            .then(userEdit => {
+                document.getElementById('edit_id').value = userEdit.id;
+                document.getElementById('edit_name').value = userEdit.name;
+                document.getElementById('edit_surname').value = userEdit.surname;
+                document.getElementById('edit_age').value = userEdit.age;
+                document.getElementById('edit_username').value = userEdit.username;
+                document.getElementById('edit_password').value = userEdit.password;
+                document.getElementById('edit_role').value = userEdit.roles;
+
+                const select = document.querySelector('#edit_role').getElementsByTagName('option');
+
+                for (let i = 0; i < select.length; i++) {
+                    if (select[i].value === userEdit.roles[i].role) {
+                        select[i].selected = true;
+                        if (i === select.length - 1) {
+                            break;
+                        }
+                    } else if (select[i + 1].value === userEdit.roles[i].role) {
+                        select[i + 1].selected = true;
+                    }
+                }
+            })
+    });
+}
+
+function editUser() {
+    event.preventDefault();
+    let id = document.getElementById('edit_id').value;
+    let name = document.getElementById('edit_name').value;
+    let surname = document.getElementById('edit_surname').value;
+    let age = document.getElementById('edit_age').value;
+    let username = document.getElementById('edit_username').value;
+    let password = document.getElementById('edit_password').value;
+    let roles = $("#edit_role").val()
+
+    // for (let i = 0; i < roles.length; i++) {
+    //     if (roles[i] === 'ROLE_ADMIN') {
+    //         roles[i] = 'ROLE_ADMIN'
+    //     }
+    //     if (roles[i] === 'ROLE_USER') {
+    //         roles[i] = 'ROLE_USER'
+    //     }
+    // }
+
+    fetch(URL, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify({
+            'id': id,
+            'name': name,
+            'surname': surname,
+            'age': age,
+            'username': username,
+            'password': password,
+            'roles': roles
+        })
+    })
+        .then(() => {
+            $('#editModal').modal('hide');
+            getUsers();
+        })
+}
+
+function getDeleteModal(id) {
+    fetch(URL + '/' + id, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then(res => {
+        res.json().then(userDelete => {
+            document.getElementById('delete_id').value = userDelete.id;
+            document.getElementById('delete_username').value = userDelete.name;
+            document.getElementById('delete_surname').value = userDelete.surname;
+            document.getElementById('delete_age').value = userDelete.age;
+            document.getElementById('delete_job').value = userDelete.username;
+            document.getElementById('delete_password').value = userDelete.password;
+            document.getElementById('delete_role').value = userDelete.roles;
+        })
+    });
+}
+
+function deleteUser() {
+    event.preventDefault();
+    let id = document.getElementById('delete_id').value;
+
+    fetch(URL + '/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+
+    })
+        .then(() => {
+            $('#deleteModal').modal('hide');
+            getUsers();
+        })
+}
+
+function addUser() {
+    event.preventDefault();
+    let name = document.getElementById('create_name').value;
+    let surname = document.getElementById('create_surname').value;
+    let age = document.getElementById('create_age').value;
+    let username = document.getElementById('create_username').value;
+    let password = document.getElementById('create_password').value;
+    let roles = $("#create_role").val()
+
+
+    fetch(URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify({
+            'name': name,
+            'surname': surname,
+            'age': age,
+            'username': username,
+            'password': password,
+            'roles': roles
+        })
+    })
+        .then(() => {
+            document.getElementById('nav-users_table-tab').click()
+            getUsers()
+            document.newUserForm.reset()
+        })
+
+}

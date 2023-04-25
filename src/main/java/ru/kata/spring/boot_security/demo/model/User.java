@@ -6,10 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -109,8 +106,8 @@ public class User implements UserDetails {
         return getRoles();
     }
 
-    public List<String> getRoleNames() {
-        return roles.stream().map(Role::getName).sorted().collect(Collectors.toList());
+    public ArrayList<String> getRoleNames() {
+        return roles.stream().map(Role::getName).sorted().collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override

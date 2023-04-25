@@ -49,8 +49,8 @@ document.getElementById("adminPanel").innerHTML=
             <div class="form-group">
               <p class="text-center my-0"><strong> Role </strong></p>
               <select multiple class="form-control p-0 m-0" id="roles" name="roles">
-                <option value="2">ADMIN</option>
-                <option value="1">USER</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option>
               </select>
             </div>
                 <div class="d-flex justify-content-center">
