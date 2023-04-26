@@ -9,17 +9,12 @@ import java.util.stream.Collectors;
 
 public class UserDto {
     private Long id;
-
     private String username;
-
     private String name;
     private String surname;
-
     private String password;
-
     private Byte age;
     private Set<Long> chosenRoles;
-
     private ArrayList<String> roles;
 
     public UserDto(String username, String password, String name, String surname, Byte age, Long id, Set<Long> chosenRoles, ArrayList<String> roles) {

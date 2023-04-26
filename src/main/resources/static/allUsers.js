@@ -1,5 +1,6 @@
 const data = document.getElementById("tableUserBody");
 const url = 'http://localhost:8080/api/v1/admin/users/user';
+const delete_url = 'http://localhost:8080/api/v1/admin/users';
 const panel = document.getElementById("admin-header");
 
 function userAuthInfo() {
@@ -47,22 +48,6 @@ function getUsers() {
                 out += '<td>' + user.age + '</td>';
                 out += '<td>' + user.username + '</td>';
                 out += '<td>' + user.rolesAsString + '</td>';
-
-                // let i, role = "";
-                // for (i in user.roles) {
-                //     if (user.roles[i].role === "ROLE_USER") {
-                //         role = "USER";
-                //     } else {
-                //         role = "ADMIN";
-                //     }
-                //     if (user.roles.length === 1) {
-                //         out += "<td>" + role + "</td>";
-                //     } else if (i == 0) {
-                //         out += "<td>" + role + ", ";
-                //     } else {
-                //         out += role + "</td>";
-                //     }
-                // }
                 out += '<td>' +
                     '<button type="button" class="btn btn-info" data-bs-target="#editModal" data-bs-toggle="modal" ' +
                     'onclick="getEditModal(' + user.id + ')">' + 'Edit' +
@@ -96,19 +81,6 @@ function getEditModal(id) {
                 document.getElementById('edit_username').value = userEdit.username;
                 document.getElementById('edit_password').value = userEdit.password;
                 document.getElementById('edit_role').value = userEdit.roles;
-
-                const select = document.querySelector('#edit_role').getElementsByTagName('option');
-
-                for (let i = 0; i < select.length; i++) {
-                    if (select[i].value === userEdit.roles[i].role) {
-                        select[i].selected = true;
-                        if (i === select.length - 1) {
-                            break;
-                        }
-                    } else if (select[i + 1].value === userEdit.roles[i].role) {
-                        select[i + 1].selected = true;
-                    }
-                }
             })
     });
 }
@@ -123,14 +95,6 @@ function editUser() {
     let password = document.getElementById('edit_password').value;
     let roles = $("#edit_role").val()
 
-    // for (let i = 0; i < roles.length; i++) {
-    //     if (roles[i] === 'ROLE_ADMIN') {
-    //         roles[i] = 'ROLE_ADMIN'
-    //     }
-    //     if (roles[i] === 'ROLE_USER') {
-    //         roles[i] = 'ROLE_USER'
-    //     }
-    // }
 
     fetch(URL, {
         method: 'PUT',
@@ -154,7 +118,7 @@ function editUser() {
 }
 
 function getDeleteModal(id) {
-    fetch(URL + '/' + id, {
+    fetch(delete_url + '/' + id, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8'
@@ -162,10 +126,10 @@ function getDeleteModal(id) {
     }).then(res => {
         res.json().then(userDelete => {
             document.getElementById('delete_id').value = userDelete.id;
-            document.getElementById('delete_username').value = userDelete.name;
+            document.getElementById('delete_name').value = userDelete.name;
             document.getElementById('delete_surname').value = userDelete.surname;
             document.getElementById('delete_age').value = userDelete.age;
-            document.getElementById('delete_job').value = userDelete.username;
+            document.getElementById('delete_username').value = userDelete.username;
             document.getElementById('delete_password').value = userDelete.password;
             document.getElementById('delete_role').value = userDelete.roles;
         })
