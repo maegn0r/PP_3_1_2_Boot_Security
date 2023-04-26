@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new LinkedHashSet<>();
+    private Set<Role> roles;
 
 
     public User(String name, String surname, Byte age, Set<Role> roles) {

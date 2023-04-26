@@ -1,10 +1,10 @@
 const data = document.getElementById("tableUserBody");
-const url = 'http://localhost:8080/api/v1/admin/users/user';
-const delete_url = 'http://localhost:8080/api/v1/admin/users';
+const user_url = 'http://localhost:8080/api/user';
+const admin_url = 'http://localhost:8080/api/admin/users';
 const panel = document.getElementById("admin-header");
 
 function userAuthInfo() {
-    fetch(url)
+    fetch(user_url)
         .then((res) => res.json())
         .then((user) => {
 
@@ -26,7 +26,7 @@ function userAuthInfo() {
 userAuthInfo()
 
 
-const URL = "/api/v1/admin/users";
+const URL = "/api/admin/users";
 
 $(document).ready(function () {
     getUsers();
@@ -118,7 +118,7 @@ function editUser() {
 }
 
 function getDeleteModal(id) {
-    fetch(delete_url + '/' + id, {
+    fetch(admin_url + '/' + id, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8'
@@ -140,7 +140,7 @@ function deleteUser() {
     event.preventDefault();
     let id = document.getElementById('delete_id').value;
 
-    fetch(URL + '/' + id, {
+    fetch(admin_url + '/' + id, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json;charset=UTF-8'

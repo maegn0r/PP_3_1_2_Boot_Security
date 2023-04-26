@@ -1,5 +1,5 @@
 const data = document.getElementById("tableUserBody");
-const url = 'http://localhost:8080/api/v1/user';
+const url = 'http://localhost:8080/api/user';
 const panel = document.getElementById("user-header");
 
 function userAuthInfo() {
